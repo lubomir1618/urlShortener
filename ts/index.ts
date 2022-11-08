@@ -79,9 +79,3 @@ app.get('/:id', async (req: Request, res: Response)  => {
 app.listen(port, (): void => {
   console.log(`Listening on port ${ port }`);
 });
-
-
-// @TODO slow down, validate etc., generate slug
-
-// 1. add, 2. slug verify, 3. css
-// length od slug

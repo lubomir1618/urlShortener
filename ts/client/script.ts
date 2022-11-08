@@ -19,7 +19,7 @@ document.addEventListener('DOMContentLoaded', () => {
       if (slug.value) {
         slugExists(slug.value, url.value);
       } else {
-        getShortenURL(url.value, slug.value);
+        getShortenURL(url.value);
       }
       info.innerHTML = '';
     } else {
@@ -29,9 +29,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
   customize.addEventListener('click', () => {
     if (customize.checked) {
-      slug.style.display = 'block';
+      slug.removeAttribute('disabled')
     } else {
-      slug.style.display = 'none';
+      slug.setAttribute('disabled', '');
     }
   })
 
@@ -45,7 +45,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     };
 
-    if (slug) {
+    if (slugToAdd) {
       options.body = `{"url": "${urlToShorten}", "slug": "${slugToAdd}"}`;
     }
 
@@ -132,9 +132,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
 function prepareStatistics(statistics: any): void { // @TODO check type
   if (statistics.length > 0) {
-    
+    console.log('stats', statistics);
   }
-  console.log('prepare statistics', statistics); // ??
 }
-
-// @TODO table statistic, copy to clip board, slug exist

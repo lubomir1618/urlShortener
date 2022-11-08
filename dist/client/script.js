@@ -17,7 +17,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 slugExists(slug.value, url.value);
             }
             else {
-                getShortenURL(url.value, slug.value);
+                getShortenURL(url.value);
             }
             info.innerHTML = '';
         }
@@ -27,10 +27,10 @@ document.addEventListener('DOMContentLoaded', () => {
     });
     customize.addEventListener('click', () => {
         if (customize.checked) {
-            slug.style.display = 'block';
+            slug.removeAttribute('disabled');
         }
         else {
-            slug.style.display = 'none';
+            slug.setAttribute('disabled', '');
         }
     });
     function getShortenURL(urlToShorten, slugToAdd) {
@@ -42,7 +42,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 'Content-Type': 'application/json'
             }
         };
-        if (slug) {
+        if (slugToAdd) {
             options.body = `{"url": "${urlToShorten}", "slug": "${slugToAdd}"}`;
         }
         fetch(`${LOCATION}url`, options)
@@ -124,7 +124,6 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 function prepareStatistics(statistics) {
     if (statistics.length > 0) {
+        console.log('stats', statistics);
     }
-    console.log('prepare statistics', statistics); // ??
 }
-// @TODO table statistic, copy to clip board, slug exist
