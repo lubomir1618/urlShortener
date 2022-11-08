@@ -6,5 +6,17 @@
 
 h1 {
   font-family: sans-serif;
-  color: lightblue;
+  color: red;
+}
+
+h2 {
+  color: green;
+}
+
+button {
+  cursor: pointer;
+}
+
+#loading, #slug {
+  display: none;
 }
