@@ -1,47 +1,52 @@
-const LOCATION = document.location.href;
-const table = document.querySelector('#table') as HTMLDivElement;
+document.addEventListener('DOMContentLoaded', () => {
 
-getStatistics() ;
+  const ORIGIN = document.location.origin;
+  const dataTable = document.querySelector('#table') as HTMLDivElement;
 
-function getStatistics(): void {
-  const options = { 
-    method: 'POST',
-    body: '',
-    headers: {
-      'Accept': 'application/json',
-      'Content-Type': 'application/json'
-    }
-  };
+  getStatistics() ;
 
-  fetch(`/statistics`, options)
-    .then(response => response.json())
-    .then(response => {
-      if (response) {
-        prepareStatistics(response);
-      } else {
-        console.log('statistics error');
+  function getStatistics(): void {
+    const options = { 
+      method: 'POST',
+      body: '',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
       }
-    })
-    .catch(err => {
-      console.log('statistics error', err);
-    }); 
-}
+    };
 
-
-function prepareStatistics(statistics: any): void { // @TODO check type
-  if (statistics.length > 0) {
-    console.log('stats', statistics);
+    fetch(`/statistics`, options)
+      .then(response => response.json())
+      .then(response => {
+        if (response) {
+          renderDataTable(response);
+        } else {
+          console.log('statistics error');
+        }
+      })
+      .catch(err => {
+        console.log('statistics error', err);
+      }); 
   }
-}
 
-new gridjs.Grid({
-  columns: ["Name", "Email", "Phone Number", "test"],
-  data: [
-    ["John", "john@example.com", "(353) 01 222 3333", 3],
-    ["Mark", "mark@gmail.com", "(01) 22 888 4444", 3],
-    ["Eoin", "eoin@gmail.com", "0097 22 654 00033", 4],
-    ["Sarah", "sarahcdd@gmail.com", "+322 876 1233", 5],
-    ["Afshin", "afshin@mail.com", "(353) 22 87 8356", 7]
-  ]
-}).render(document.querySelector("#wrapper"));
+
+  function renderDataTable(statistics: any): void {
+    if (statistics.length > 0) {
+      let data: any[] = [];
+
+      statistics.forEach((item: any) => {
+        let row: any[] = [item.url, `${ORIGIN}/${item.slug}`, new Date(item.date).toLocaleDateString(), item.visits ];
+        data.push(row);
+      });
+
+      new gridjs.Grid({
+        columns: ['Address', 'Shorten address', 'Date', 'Visits'],
+        sort: true,
+        data
+      }).render(document.querySelector('#wrapper'));
+
+      console.log('stats', statistics, data);
+    }
+  }
+});
 
