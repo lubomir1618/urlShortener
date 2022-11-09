@@ -22,7 +22,7 @@ html, body {
 }
 
 h1 {
-  font-size: 40px;
+  font-size: 44px;
   color: #2E312E;
   margin-bottom: 10px;
 }
@@ -102,7 +102,23 @@ h2 {
   transform: translate(-50%, -50%);
 }
 
+#statistic-link {
+  position: absolute;
+  right: 0px;
+  top: 0px;
+  width: 24px;
+  height: 24px;
+  z-index: 999;
+}
+
+#copy {
+  display: none;
+  margin-top: 20px;
+  cursor: pointer;
+}
+
 #info {
+  position: relative;
   width: 100%;
   height: 40px;
   padding: 20px;

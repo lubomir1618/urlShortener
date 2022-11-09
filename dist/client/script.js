@@ -10,6 +10,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const slug = document.querySelector('#slug');
     const info = document.querySelector('#info');
     const loading = document.querySelector('#loading');
+    const copy = document.querySelector('#copy');
+    let createdLink = '';
     getStatistics(); // @TODO move it
     shorten.addEventListener('click', () => {
         loading.style.display = 'block';
@@ -24,6 +26,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         else {
             info.innerHTML = VALID_URL;
+            copy.style.display = 'none';
             loading.style.display = 'none';
         }
     });
@@ -33,6 +36,18 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         else {
             slug.setAttribute('disabled', '');
+        }
+    });
+    copy.addEventListener('click', () => {
+        if (createdLink) {
+            navigator.clipboard.writeText(createdLink)
+                .then((() => {
+                info.innerHTML = `${info.innerHTML} - copied to clipboard`;
+                console.log(`${createdLink} copied to clipboard.`);
+            }))
+                .catch(err => {
+                console.log(`Can not copy ${createdLink} to clipboard`, err);
+            });
         }
     });
     function getShortenURL(urlToShorten, slugToAdd) {
@@ -52,7 +67,9 @@ document.addEventListener('DOMContentLoaded', () => {
             .then(response => {
             if (response.newURL) {
                 const address = `${LOCATION}${response.newURL.slug}`;
+                createdLink = address;
                 info.innerHTML = `<a href="${address}" title="${address}" target="_blank">${address}</a>`;
+                copy.style.display = 'block';
                 loading.style.display = 'none';
             }
             else {
@@ -85,6 +102,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
             else {
                 info.innerHTML = SLUG_EXISTS;
+                copy.style.display = 'none';
                 loading.style.display = 'none';
             }
         })

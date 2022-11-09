@@ -11,6 +11,9 @@ document.addEventListener('DOMContentLoaded', () => {
   const slug = document.querySelector('#slug') as HTMLInputElement;
   const info = document.querySelector('#info') as HTMLDivElement;
   const loading = document.querySelector('#loading') as HTMLDivElement;
+  const copy = document.querySelector('#copy') as HTMLDivElement;
+
+  let createdLink: string = '';
 
   getStatistics() ; // @TODO move it
 
@@ -26,6 +29,7 @@ document.addEventListener('DOMContentLoaded', () => {
       info.innerHTML = '';
     } else {
       info.innerHTML = VALID_URL;
+      copy.style.display = 'none';
       loading.style.display = 'none';
     }
   })
@@ -35,6 +39,19 @@ document.addEventListener('DOMContentLoaded', () => {
       slug.removeAttribute('disabled')
     } else {
       slug.setAttribute('disabled', '');
+    }
+  })
+
+  copy.addEventListener('click', () => {
+    if (createdLink) {
+      navigator.clipboard.writeText(createdLink)
+        .then((() => {
+          info.innerHTML = `${info.innerHTML} - copied to clipboard`;
+          console.log(`${createdLink} copied to clipboard.`);
+        }))
+        .catch(err => {
+          console.log(`Can not copy ${createdLink} to clipboard`, err);
+        });
     }
   })
 
@@ -57,8 +74,9 @@ document.addEventListener('DOMContentLoaded', () => {
       .then(response => {
         if (response.newURL) {
           const address = `${LOCATION}${response.newURL.slug}`;
-
+          createdLink = address;
           info.innerHTML = `<a href="${address}" title="${address}" target="_blank">${address}</a>`;
+          copy.style.display = 'block';
           loading.style.display = 'none';
         } else {
           info.innerHTML = CAN_NOT_ADD;
@@ -91,6 +109,7 @@ document.addEventListener('DOMContentLoaded', () => {
           getShortenURL(url, slug);
         } else {
           info.innerHTML = SLUG_EXISTS;
+          copy.style.display = 'none';
           loading.style.display = 'none';
         }
       })
