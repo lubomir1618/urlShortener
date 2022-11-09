@@ -23,6 +23,7 @@ app.get('/', (req: Request, res: Response): void  => {
   res.sendFile(path.resolve(__dirname, 'client', 'index.html'));
 });
 
+// adding new url
 app.post('/url', async (req: Request, res: Response) => {
   let { url, slug } = req.body;
   if (!slug) {  
@@ -38,6 +39,7 @@ app.post('/url', async (req: Request, res: Response) => {
   res.json({ newURL });
 });
 
+// find out if slug exists
 app.post('/slug', async (req: Request, res: Response ) => {
   const { slug } = req.body;
   try {
@@ -53,6 +55,7 @@ app.post('/slug', async (req: Request, res: Response ) => {
   }
 });
 
+// getting all urls
 app.post('/statistics', async (req: Request, res: Response) => {
   urls
   .find({}, {sort: {visits: -1}})
@@ -60,7 +63,8 @@ app.post('/statistics', async (req: Request, res: Response) => {
   .catch((err) => res.status(404)); 
 });
 
-app.get('/:id', async (req: Request, res: Response)  => {
+// redirect to url
+app.get('/:id', async (req: Request, res: Response) => {
   const { id: slug }  = req.params;
   try {
     const result = await urls.findOneAndUpdate({ slug }, { $inc: { visits: + 1 } });

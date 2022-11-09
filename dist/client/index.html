@@ -14,21 +14,25 @@
   <div class="shortener">
     <div class="form">
       <h1>URL Shortener</h1>
-      <h2>it helps to remember address</h2>
+      <h2>it helps to remember longer address</h2>
       <input type="text" id="url" name="url" placeholder="Address to shorten">
       <br>
-      <label for="custom">Customize link</label>
-      <input type="checkbox" id="customize">
+      <label for="customize">Customize link</label>
+      <input type="checkbox" id="customize" name="customize">
       <br>
       <input type="text" id="slug" name="slug" disabled="disabled">
       <br>
       <button id="shorten">Shorten</button>
     </div>
     <div id="info"></div>
-    <div id="loading"></div>
+    <div id="loading">
+      <div class="circle"></div>
+    </div>
+    <!-- 
     <div id="statistics">
       ...lorem ipsum
     </div>
+    -->
   </div>
 </body>
 </html>

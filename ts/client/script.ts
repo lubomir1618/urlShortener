@@ -15,6 +15,8 @@ document.addEventListener('DOMContentLoaded', () => {
   getStatistics() ; // @TODO move it
 
   shorten.addEventListener('click', () => {
+    loading.style.display = 'block';
+
     if (isValidURL(url.value)) {
       if (slug.value) {
         slugExists(slug.value, url.value);
@@ -24,6 +26,7 @@ document.addEventListener('DOMContentLoaded', () => {
       info.innerHTML = '';
     } else {
       info.innerHTML = VALID_URL;
+      loading.style.display = 'none';
     }
   })
 
@@ -66,6 +69,7 @@ document.addEventListener('DOMContentLoaded', () => {
       })
       .catch(err => {
         info.innerHTML = CAN_NOT_ADD;
+        loading.style.display = 'none';
         console.log(CAN_NOT_ADD, err);
       }); 
   }
@@ -87,10 +91,12 @@ document.addEventListener('DOMContentLoaded', () => {
           getShortenURL(url, slug);
         } else {
           info.innerHTML = SLUG_EXISTS;
+          loading.style.display = 'none';
         }
       })
       .catch(err => {
         info.innerHTML = CAN_NOT_ADD;
+        loading.style.display = 'none';
         console.log(CAN_NOT_ADD, err);
       }); 
   }

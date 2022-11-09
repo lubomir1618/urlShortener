@@ -32,6 +32,7 @@ app.get('/', (req, res) => {
     res.set('Content-Type', 'text/html');
     res.sendFile(path_1.default.resolve(__dirname, 'client', 'index.html'));
 });
+// adding new url
 app.post('/url', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     let { url, slug } = req.body;
     if (!slug) {
@@ -46,6 +47,7 @@ app.post('/url', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const newURL = yield urls.insert(query);
     res.json({ newURL });
 }));
+// find out if slug exists
 app.post('/slug', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { slug } = req.body;
     try {
@@ -59,12 +61,14 @@ app.post('/slug', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         return res.json({ result: false });
     }
 }));
+// getting all urls
 app.post('/statistics', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     urls
         .find({}, { sort: { visits: -1 } })
         .then((data) => res.json(data))
         .catch((err) => res.status(404));
 }));
+// redirect to url
 app.get('/:id', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { id: slug } = req.params;
     try {
