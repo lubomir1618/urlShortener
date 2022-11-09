@@ -23,6 +23,12 @@ app.get('/', (req: Request, res: Response): void  => {
   res.sendFile(path.resolve(__dirname, 'client', 'index.html'));
 });
 
+app.get('/pages/:id', (req: Request, res: Response): void  => {
+  const { id: page }  = req.params;
+  res.set('Content-Type', 'text/html');
+  res.sendFile(path.resolve(__dirname, 'client', `${page}.html`));
+});
+
 // adding new url
 app.post('/url', async (req: Request, res: Response) => {
   let { url, slug } = req.body;

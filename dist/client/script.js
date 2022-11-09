@@ -43,7 +43,6 @@ document.addEventListener('DOMContentLoaded', () => {
             navigator.clipboard.writeText(createdLink)
                 .then((() => {
                 info.innerHTML = `${info.innerHTML} - copied to clipboard`;
-                console.log(`${createdLink} copied to clipboard.`);
             }))
                 .catch(err => {
                 console.log(`Can not copy ${createdLink} to clipboard`, err);

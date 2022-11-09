@@ -32,6 +32,11 @@ app.get('/', (req, res) => {
     res.set('Content-Type', 'text/html');
     res.sendFile(path_1.default.resolve(__dirname, 'client', 'index.html'));
 });
+app.get('/pages/:id', (req, res) => {
+    const { id: page } = req.params;
+    res.set('Content-Type', 'text/html');
+    res.sendFile(path_1.default.resolve(__dirname, 'client', `${page}.html`));
+});
 // adding new url
 app.post('/url', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     let { url, slug } = req.body;
