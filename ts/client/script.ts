@@ -45,6 +45,7 @@ document.addEventListener('DOMContentLoaded', () => {
       navigator.clipboard.writeText(createdLink)
         .then((() => {
           info.innerHTML = `${info.innerHTML} - copied to clipboard`;
+          copy.style.display = 'none';
         }))
         .catch(err => {
           console.log(`Can not copy ${createdLink} to clipboard`, err);
@@ -117,43 +118,12 @@ document.addEventListener('DOMContentLoaded', () => {
       }); 
   }
 
-
-  function getStatistics(): void {
-    const options = { 
-      method: 'POST',
-      body: '',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      }
-    };
-
-    fetch(`${LOCATION}statistics`, options)
-      .then(response => response.json())
-      .then(response => {
-        if (response) {
-          prepareStatistics(response);
-        } else {
-          console.log('statistics error');
-        }
-      })
-      .catch(err => {
-        console.log('statistics error', err);
-      }); 
-  }
-
   function isValidURL(url: string): boolean {
     try {
       new URL(url);
       return true;
     } catch (err) {
       return false;
-    }
-  }
-
-  function prepareStatistics(statistics: any): void { // @TODO check type
-    if (statistics.length > 0) {
-      console.log('stats', statistics);
     }
   }
 });
