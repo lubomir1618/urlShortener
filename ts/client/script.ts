@@ -15,8 +15,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
   let createdLink: string = '';
 
-  getStatistics() ; // @TODO move it
-
   shorten.addEventListener('click', () => {
     loading.style.display = 'block';
 
@@ -68,7 +66,7 @@ document.addEventListener('DOMContentLoaded', () => {
       options.body = `{"url": "${urlToShorten}", "slug": "${slugToAdd}"}`;
     }
 
-    fetch(`${LOCATION}url`, options)
+    fetch(`/url`, options)
       .then(response => response.json())
       .then(response => {
         if (response.newURL) {
@@ -101,7 +99,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     };
 
-    fetch(`${LOCATION}slug`, options)
+    fetch(`/slug`, options)
       .then(response => response.json())
       .then(response => {
         if (response && !response.result) {
@@ -152,10 +150,12 @@ document.addEventListener('DOMContentLoaded', () => {
       return false;
     }
   }
+
+  function prepareStatistics(statistics: any): void { // @TODO check type
+    if (statistics.length > 0) {
+      console.log('stats', statistics);
+    }
+  }
 });
 
-function prepareStatistics(statistics: any): void { // @TODO check type
-  if (statistics.length > 0) {
-    console.log('stats', statistics);
-  }
-}
+

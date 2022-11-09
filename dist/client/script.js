@@ -12,7 +12,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const loading = document.querySelector('#loading');
     const copy = document.querySelector('#copy');
     let createdLink = '';
-    getStatistics(); // @TODO move it
     shorten.addEventListener('click', () => {
         loading.style.display = 'block';
         if (isValidURL(url.value)) {
@@ -61,7 +60,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (slugToAdd) {
             options.body = `{"url": "${urlToShorten}", "slug": "${slugToAdd}"}`;
         }
-        fetch(`${LOCATION}url`, options)
+        fetch(`/url`, options)
             .then(response => response.json())
             .then(response => {
             if (response.newURL) {
@@ -93,7 +92,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 'Content-Type': 'application/json'
             }
         };
-        fetch(`${LOCATION}slug`, options)
+        fetch(`/slug`, options)
             .then(response => response.json())
             .then(response => {
             if (response && !response.result) {
@@ -143,9 +142,9 @@ document.addEventListener('DOMContentLoaded', () => {
             return false;
         }
     }
-});
-function prepareStatistics(statistics) {
-    if (statistics.length > 0) {
-        console.log('stats', statistics);
+    function prepareStatistics(statistics) {
+        if (statistics.length > 0) {
+            console.log('stats', statistics);
+        }
     }
-}
+});

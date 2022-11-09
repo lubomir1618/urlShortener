@@ -47,12 +47,15 @@ h2 {
   border-radius: 6px; 
   transition: all 0.6s ease-out;
   color: #2E312E;
+  box-shadow: 0px 0px 5px 2px #fff;
 }
 
 #shorten:hover {
   border-radius: 8px;
   border: 1px solid #681888;
   background-color: #FEEAD4;
+  box-shadow: 0px 0px 2px 2px #fff;
+  color: #373937;
 }
 
 #url {
