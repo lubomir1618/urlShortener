@@ -64,7 +64,7 @@ app.post('/slug', async (req: Request, res: Response ) => {
 // getting all urls
 app.post('/statistics', async (req: Request, res: Response) => {
   urls
-  .find({}, {sort: {visits: -1}})
+  .find({}, {sort: {visits: -1}, limit: 100})
   .then((data) => res.json(data))
   .catch((err) => res.status(404)); 
 });

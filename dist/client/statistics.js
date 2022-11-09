@@ -1,7 +1,7 @@
 "use strict";
 document.addEventListener('DOMContentLoaded', () => {
     const ORIGIN = document.location.origin;
-    const dataTable = document.querySelector('#table');
+    const table = document.querySelector('#table');
     getStatistics();
     function getStatistics() {
         const options = {
@@ -28,17 +28,32 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     function renderDataTable(statistics) {
         if (statistics.length > 0) {
+            const columns = ['Address', 'Shorten address', 'Date', 'Visits'];
             let data = [];
             statistics.forEach((item) => {
                 let row = [item.url, `${ORIGIN}/${item.slug}`, new Date(item.date).toLocaleDateString(), item.visits];
                 data.push(row);
             });
-            new gridjs.Grid({
-                columns: ['Address', 'Shorten address', 'Date', 'Visits'],
-                sort: true,
-                data
-            }).render(document.querySelector('#wrapper'));
-            console.log('stats', statistics, data);
+            let dataTable = document.createElement('table');
+            let headerRow = document.createElement('tr');
+            columns.forEach(item => {
+                let header = document.createElement('th');
+                let textNode = document.createTextNode(item);
+                header.appendChild(textNode);
+                headerRow.appendChild(header);
+            });
+            dataTable.appendChild(headerRow);
+            data.forEach((stat) => {
+                let row = document.createElement('tr');
+                stat.forEach((text) => {
+                    let cell = document.createElement('td');
+                    let textNode = document.createTextNode(text);
+                    cell.appendChild(textNode);
+                    row.appendChild(cell);
+                });
+                dataTable.appendChild(row);
+            });
+            table.appendChild(dataTable);
         }
     }
 });

@@ -69,7 +69,7 @@ app.post('/slug', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
 // getting all urls
 app.post('/statistics', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     urls
-        .find({}, { sort: { visits: -1 } })
+        .find({}, { sort: { visits: -1 }, limit: 100 })
         .then((data) => res.json(data))
         .catch((err) => res.status(404));
 }));
