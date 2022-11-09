@@ -13,7 +13,7 @@ Written in Typescript at frontend and backend. Server part is nodejs and uses Ex
 
 ## Deploy
  - `dist` directory contains all files needed for server hosting. Server requires nodejs hosting environment.
- - to change mongodb url you need specify it in `.env` file and rebuild app or this should be set as config variable.
+ - to change mongodb url you need specify it in `.env` as `MONGO_URL` or it should be set as config variable.
 
 ## Launching
 App is temporary located at Heroku.
