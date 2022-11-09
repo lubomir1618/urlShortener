@@ -22,7 +22,7 @@ html, body {
   background: transparent;
 }
 
-.dataTable {
+.statistics {
   position: relative;
   top: 40px; 
   text-align: center;
@@ -30,6 +30,13 @@ html, body {
   margin: 0 auto;
   padding: 30px;
   background: transparent;
+}
+
+#dataTable table {
+  border-radius: 8px;
+  background-color: #eddddd;
+  color:#464a46;
+  font-size: 14px;
 }
 
 h1 {

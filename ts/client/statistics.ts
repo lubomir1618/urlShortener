@@ -32,18 +32,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function renderDataTable(statistics: any): void {
     if (statistics.length > 0) {
+      columns: ['Address', 'Shorten address', 'Date', 'Visits']
       let data: any[] = [];
 
-      statistics.forEach((item: any) => {
-        let row: any[] = [item.url, `${ORIGIN}/${item.slug}`, new Date(item.date).toLocaleDateString(), item.visits ];
-        data.push(row);
-      });
-
-      new gridjs.Grid({
-        columns: ['Address', 'Shorten address', 'Date', 'Visits'],
-        sort: true,
-        data
-      }).render(document.querySelector('#wrapper'));
+      // let row: any[] = [item.url, `${ORIGIN}/${item.slug}`, new Date(item.date).toLocaleDateString(), item.visits ];
 
       console.log('stats', statistics, data);
     }
