@@ -2,7 +2,7 @@
 Internet address shortening tool.
 Allows to specify own link or it is generated automatically.
 
-Written in Typescript at frontend and backend. Server part is nodejs and uses Express framework.
+Client part is written in  Typescript. Server part is Node.js and uses Express framework.
 
 
 ## Develop
