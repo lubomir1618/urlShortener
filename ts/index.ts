@@ -4,9 +4,11 @@ import path from 'path';
 import monk from 'monk';
 import dotenv from 'dotenv';
 import randomstring from 'randomstring';
+import validUrl from 'valid-url';
 
 const app = express();
 const port = process.env.PORT || 3000;
+const notFound = path.resolve(__dirname, 'client', '404.html');
 
 app.use(cors());
 app.use(express.json());
@@ -16,6 +18,7 @@ app.use(express.static('dist/client'));
 dotenv.config();
 const db = monk(process.env.MONGO_URL || '');
 const urls = db.get('urls');
+urls.createIndex({ slug: 1 }, { unique: true });
 
 // Routing
 app.get('/', (req: Request, res: Response): void  => {
@@ -41,8 +44,13 @@ app.post('/url', async (req: Request, res: Response) => {
     visits: 0,
     date: new Date().getTime()
   };
-  const newURL = await urls.insert(query);
-  res.json({ newURL });
+
+  if (validUrl.isUri(url)) {
+    const newURL = await urls.insert(query);
+    res.json({ newURL });
+  } else {
+    res.json({});
+  }
 });
 
 // find out if slug exists
@@ -78,10 +86,10 @@ app.get('/:id', async (req: Request, res: Response) => {
       return res.redirect(result.url);
     }
 
-    return res.status(404);
+    return res.status(404).sendFile(notFound);
   } catch (error) {
-    
-    return res.status(404);
+
+    return res.status(404).sendFile(notFound);
   }
 });
 

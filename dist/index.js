@@ -18,8 +18,10 @@ const path_1 = __importDefault(require("path"));
 const monk_1 = __importDefault(require("monk"));
 const dotenv_1 = __importDefault(require("dotenv"));
 const randomstring_1 = __importDefault(require("randomstring"));
+const valid_url_1 = __importDefault(require("valid-url"));
 const app = (0, express_1.default)();
 const port = process.env.PORT || 3000;
+const notFound = path_1.default.resolve(__dirname, 'client', '404.html');
 app.use((0, cors_1.default)());
 app.use(express_1.default.json());
 app.use(express_1.default.static('dist/client'));
@@ -27,6 +29,7 @@ app.use(express_1.default.static('dist/client'));
 dotenv_1.default.config();
 const db = (0, monk_1.default)(process.env.MONGO_URL || '');
 const urls = db.get('urls');
+urls.createIndex({ slug: 1 }, { unique: true });
 // Routing
 app.get('/', (req, res) => {
     res.set('Content-Type', 'text/html');
@@ -49,8 +52,13 @@ app.post('/url', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         visits: 0,
         date: new Date().getTime()
     };
-    const newURL = yield urls.insert(query);
-    res.json({ newURL });
+    if (valid_url_1.default.isUri(url)) {
+        const newURL = yield urls.insert(query);
+        res.json({ newURL });
+    }
+    else {
+        res.json({});
+    }
 }));
 // find out if slug exists
 app.post('/slug', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -81,10 +89,10 @@ app.get('/:id', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         if (result) {
             return res.redirect(result.url);
         }
-        return res.status(404);
+        return res.status(404).sendFile(notFound);
     }
     catch (error) {
-        return res.status(404);
+        return res.status(404).sendFile(notFound);
     }
 }));
 // Server init 
