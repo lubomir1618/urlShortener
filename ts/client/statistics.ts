@@ -2,6 +2,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const ORIGIN = document.location.origin;
   const table = document.querySelector('#table') as HTMLDivElement;
+  interface ShortenURL {
+    _id: string;
+    url: string;
+    slug: string;
+    visits: number;
+    date: number;
+}
+
 
   getStatistics() ;
 
@@ -30,13 +38,13 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
 
-  function renderDataTable(statistics: any): void {
+  function renderDataTable(statistics: ShortenURL[]): void {
     if (statistics.length > 0) {
       const columns = ['Address', 'Shorten address', 'Date', 'Visits'];
-      let data: any[] = [];
+      let data: ( ( string | number )[] )[] = [];
 
-      statistics.forEach((item: any) => {
-        let row: any[] = [ item.url, `${ORIGIN}/${item.slug}`, new Date(item.date).toLocaleDateString(), item.visits ];
+      statistics.forEach((item: ShortenURL) => {
+        let row: ( string | number )[] = [ item.url, `${ORIGIN}/${item.slug}`, new Date(item.date).toLocaleDateString(), item.visits ];
         data.push(row);
       });
 
@@ -52,7 +60,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
       dataTable.appendChild(headerRow);
 
-      data.forEach((stat: any) => {
+      data.forEach((stat: ( string | number )[] ) => {
         let row = document.createElement('tr');
 
         stat.forEach((text: any) => {

@@ -54,6 +54,7 @@ table th {
 }
 
 table td  {
+  max-width: 380px;
   padding: 8px;
   white-space: nowrap;
   overflow: hidden;
